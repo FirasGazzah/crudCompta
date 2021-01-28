@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col">
+    <form [formGroup]="form" (ngSubmit)="addFournisseur()" (submit)="addFournisseur()">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Matricule Fiscale</mat-label>
+      <input matInput formControlName="mat">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="nom">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Adresse</mat-label>
+      <input matInput formControlName="adr">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Totale d'achat</mat-label>
+      <input matInput formControlName="totale">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Totale payeé</mat-label>
+      <input matInput formControlName="paye">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Totale impayeé</mat-label>
+      <input matInput formControlName="nonpaye">
+    </mat-form-field>
+    </form>
+  </div>
+  <div class="col">
+    <button mat-button (click)="addFournisseur()">send</button>
+  </div>
+</div>

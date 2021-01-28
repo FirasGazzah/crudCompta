@@ -1,0 +1,13 @@
+<mat-dialog-content>
+  <form  (submit)="addCategorie()">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nom</mat-label>
+      <input matInput [(ngModel)]="cat.nom" name="nom">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button color="primary" type="submit" (click)="addCategorie()">Ajouter</button>
+  <button mat-button color="warn" matDialogClose>Annuler</button>
+</mat-dialog-actions>

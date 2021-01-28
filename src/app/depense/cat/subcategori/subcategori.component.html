@@ -1,0 +1,85 @@
+<mat-dialog-content>
+  <mat-horizontal-stepper>
+    <mat-step label="Niveau 1">
+      <form [formGroup]="firstFormGroup" (submit)="addSubCategorie()">
+        <mat-form-field appearance="outline">
+          <mat-label>Categories</mat-label>
+          <mat-select formControlName="cat">
+            <mat-option>---</mat-option>
+            <mat-option [value]="c.id" *ngFor="let c of cat | async">{{c.nom}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Sous-categori</mat-label>
+          <input matInput formControlName="subcat">
+        </mat-form-field>
+      </form>
+      <div>
+        <button mat-button color="primary" type="submit" (click)="addSubCategorie()">Ajouter</button>
+        <button mat-button color="warn" matDialogClose>Annuler</button>
+      </div>
+    </mat-step>
+
+    <mat-step label="Niveau 2">
+      <form [formGroup]="secondFormGroup" (submit)="addSubCategorie()">
+        <mat-form-field appearance="outline">
+          <mat-label>Categorie</mat-label>
+          <mat-select formControlName="cat" (selectionChange)="filter1($event.value)">
+            <mat-option>---</mat-option>
+            <mat-option [value]="c" *ngFor="let c of cat | async">{{c.nom}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Sous-categori niveau 1</mat-label>
+          <mat-select formControlName="subcat" >
+            <mat-option>---</mat-option>
+            <mat-option [value]="c.id" *ngFor="let c of subCats">{{c.nom}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Sous-categori niveau 2</mat-label>
+          <input matInput formControlName="sub2cat">
+        </mat-form-field>
+      </form>
+      <div>
+        <button mat-button color="primary" type="submit" (click)="addSubCategorie()">Ajouter</button>
+        <button mat-button color="warn" matDialogClose>Annuler</button>
+      </div>
+    </mat-step>
+
+    <mat-step label="Niveau 3">
+      <form [formGroup]="thirdFormGroup" (submit)="addSubCategorie3()">
+        <mat-form-field appearance="outline">
+          <mat-label>Categorie</mat-label>
+          <mat-select formControlName="cat" (selectionChange)="filter1($event.value)">
+            <mat-option>---</mat-option>
+            <mat-option [value]="c" *ngFor="let c of cat | async">{{c.nom}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Sous-categori niveau 1</mat-label>
+          <mat-select formControlName="subcat" (selectionChange)="filter2($event.value)">
+            <mat-option>---</mat-option>
+            <mat-option [value]="c" *ngFor="let c of subCats">{{c.nom}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Sous-categori niveau 2</mat-label>
+          <mat-select formControlName="sub2cat">
+            <mat-option>---</mat-option>
+            <mat-option [value]="c.id" *ngFor="let c of subCat2s">{{c.nom}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Sous-categori niveau 3</mat-label>
+          <input matInput formControlName="sub3cat">
+        </mat-form-field>
+      </form>
+      <div>
+        <button mat-button color="primary" type="submit" (click)="addSubCategorie()">Ajouter</button>
+        <button mat-button color="warn" matDialogClose>Annuler</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</mat-dialog-content>

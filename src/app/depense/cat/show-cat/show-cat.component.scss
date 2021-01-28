@@ -1,0 +1,51 @@
+.example-tree-invisible {
+  display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+.example-tree-node{
+  display: block;
+}
+.example-tree-node:hover{
+  display: block;
+  background-color: red;
+}
+
+.example-tree-node .example-tree-node {
+  padding-left: 40px;
+}
+span{
+  background-color: gray;
+  width: 100%;
+  border-radius: 2px;
+  border-color: red;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.example-tree-invisible {
+  display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+.hide{
+  display: none;
+}
+.myDIV:hover + .hide {
+  display: inline;
+  color: red;
+  width: 100%;
+}
+.mat-tree-node:hover {
+  background-color: rgba(255, 220, 0, 0.1) !important;
+}

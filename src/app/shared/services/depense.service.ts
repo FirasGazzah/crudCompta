@@ -1,35 +1,60 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import 'rxjs-compat/add/operator/finally';
-import { tap} from 'rxjs/operators';
+import {Observable, Observer} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {ClientModel, EtatModel} from '../model/client.model';
+import {Categorie, Departement, Depense, Sub2Categorie, SubCategorie} from '../models/depense';
+import {Fournisseur} from '../models/fournisseur';
 
 @Injectable({providedIn: 'root'})
-export class ClientService {
-    private url = environment.API + '/client';
+export class DepenseService {
+    private url = environment.API + '/depense';
 
-    httpOptions = {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-             'Authorization': 'bearer ' + localStorage.getItem('JWT_TOKEN')
-        })
-    };
+    // httpOptions = {
+    //     headers: new HttpHeaders({
+    //         'Content-Type': 'application/json',
+    //          'Authorization': 'bearer ' + localStorage.getItem('JWT_TOKEN')
+    //     })
+    // };
     constructor(private http: HttpClient) { }
 
-    getClients(): Observable<ClientModel[]> {
-        return this.http.get<ClientModel[]>(this.url, this.httpOptions);
-    }
-    getEtat(): Observable<EtatModel[]> {
-        return this.http.get<EtatModel[]>('assets/etat.json');
-    }
-    getPays(): Observable<EtatModel[]> {
-        return this.http.get<EtatModel[]>('assets/pays.json');
+    getDepense(): Observable<Depense[]> {
+        return this.http.get<Depense[]>(this.url);
     }
 
-    addClient(rec: ClientModel): Observable<ClientModel> {
-        return this.http.post<ClientModel>(this.url, rec);
+    getFournisseur(): Observable<Fournisseur[]> {
+      return this.http.get<Fournisseur[]>(this.url + '/fourni');
+    }
+    getDepartement(): Observable<Departement[]> {
+      return this.http.get<Departement[]>(this.url + '/dep');
+    }
+    getCategories(): Observable<Categorie[]> {
+      return this.http.get<Categorie[]>(this.url + '/categories');
+    }
+  getSubCategories(): Observable<SubCategorie[]> {
+    return this.http.get<SubCategorie[]>(this.url + '/subcategories');
+  }
+  getSubCategories2(): Observable<Sub2Categorie[]> {
+    return this.http.get<Sub2Categorie[]>(this.url + '/subcategories2');
+  }
+
+
+    addDepense(rec: Depense): Observable<Depense> {
+        return this.http.post<Depense>(this.url, rec);
+    }
+    addDepartment(rec): Observable<any> {
+      return this.http.post<any>(this.url + '/dep', rec);
+    }
+    addCategories(rec): Observable<any> {
+      return this.http.post<any>(this.url + '/categories', rec);
+    }
+    addSubCategories(rec, id): Observable<any> {
+      return this.http.post<any>(this.url + '/subcategories/' + id, rec);
+    }
+    addSub2Categories(rec, id): Observable<any> {
+      return this.http.post<any>(this.url + '/subcategories2/' + id, rec);
+    }
+    addSub3Categories(rec, id): Observable<any> {
+      return this.http.post<any>(this.url + '/subcategories3/' + id, rec);
     }
 
 }

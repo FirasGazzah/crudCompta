@@ -1,0 +1,211 @@
+
+    <mat-card>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Boutique</mat-label>
+            <mat-select (selectionChange)="FilterByMagasin($event.value)" >
+              <mat-option *ngFor="let prod of magasins" [value]="prod">
+                {{prod.nom}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Mois</mat-label>
+            <mat-select (selectionChange)="FilterByMonth($event.value)" >
+              <mat-option value="0">
+                Janvier
+              </mat-option>
+              <mat-option value="1">
+                février
+              </mat-option>
+              <mat-option value="2">
+                mars
+              </mat-option>
+              <mat-option value="3">
+                avril
+              </mat-option>
+              <mat-option value="4">
+                mai
+              </mat-option>
+              <mat-option value="5">
+                juin
+              </mat-option>
+              <mat-option value="6">
+                juillet
+              </mat-option>
+              <mat-option value="7">
+                août
+              </mat-option>
+              <mat-option value="8">
+                septembre
+              </mat-option>
+              <mat-option value="9">
+                octobre
+              </mat-option>
+              <mat-option value="10">
+                novembre
+              </mat-option>
+              <mat-option value="11">
+                décembre
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        <button mat-raised-button color="primary"  (click)="convertFacture()">
+          <mat-icon> cloud_download</mat-icon>
+          Facture
+        </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header card-header-danger">
+          <p class="card-title ">Quantiter Totale: {{totaleQte}} PSC</p>
+          <p class="card-title ">Totale: {{totale}} DT</p>
+        </div>
+      </div>
+      <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort >
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <mat-checkbox (change)="$event ? masterToggle() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()"
+                          [aria-label]="checkboxLabel()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                          (change)="$event ? selection.toggle(row) : null"
+                          [checked]="selection.isSelected(row)"
+                          [aria-label]="checkboxLabel(row)">
+            </mat-checkbox>
+            {{row.id}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> date </th>
+          <td mat-cell *matCellDef="let element" > {{element.date | date:'dd/MM/yyyy hh:mm:ss'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="magasin">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> magasin </th>
+          <td mat-cell *matCellDef="let element">
+            <b>{{element.magasin.nom}}</b>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="produits">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Produits commander </th>
+          <td mat-cell *matCellDef="let element" >
+            <table>
+              <thead class=" text-primary">
+              <th>Reference</th>
+              <th>Taille</th>
+              <th>Quantiter</th>
+              </thead>
+              <tr *ngFor="let symbols of element.produits">
+                <td>{{symbols.produits.produits.reference}}</td>
+                <td>{{symbols.produits.taille}}</td>
+                <td>{{symbols.qte}}</td>
+              </tr>
+            </table>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="totale">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Totale </th>
+          <td mat-cell *matCellDef="let element"> {{element.totale}} DT</td>
+        </ng-container>
+        <ng-container matColumnDef="quantiter">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantiter </th>
+          <td mat-cell *matCellDef="let element"> {{element.quantiter}} PSC</td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Type de reglement</th>
+          <td mat-cell *matCellDef="let element"> {{element.type}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <ng-container>
+          <tr  mat-row *matRowDef="let row; columns: displayedColumns;"
+               (click)="selection.toggle(row)">
+          </tr>
+        </ng-container>
+      </table>
+    </mat-card>
+
+
+
+<!--<div hidden id="listToPrintAdmin" class="printable">-->
+<!--  <table style=" border-collapse: collapse;width: 100%" id="cool">-->
+<!--    <tr class=" text-primary" style="border-bottom: 1px solid black;">-->
+<!--      <th>-->
+<!--        no cmd-->
+<!--      </th>-->
+<!--      <th>-->
+<!--        ref-->
+<!--      </th>-->
+<!--      <th>-->
+<!--        taille-->
+<!--      </th>-->
+<!--      <th>-->
+<!--        qte-->
+<!--      </th>-->
+<!--      <th>-->
+<!--        prix-->
+<!--      </th>-->
+<!--      <th>-->
+<!--        tot-->
+<!--      </th>-->
+<!--      <th>-->
+<!--        boutique-->
+<!--      </th>-->
+<!--      <th>-->
+<!--        date-->
+<!--      </th>-->
+<!--    </tr>-->
+<!--    <tbody *ngFor="let cc of commande; let index = index" style="border-bottom: 1px solid black;">-->
+<!--    <tr *ngFor="let prod of cc.produits">-->
+<!--      <td>{{cc.id}}</td>-->
+<!--      <td>{{prod.produits.produits.reference}}</td>-->
+<!--      <td>{{prod.produits.taille}}</td>-->
+<!--      <td>{{prod.qte}}</td>-->
+<!--      <td>{{prod.produits.produits.prix}}</td>-->
+<!--      <td>{{cc.totale}}</td>-->
+<!--      <td>{{cc.magasin.nom}}</td>-->
+<!--      <td>{{cc.date | date}}</td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--  <table style=" border-collapse: collapse;width: 100%" id="totale">-->
+<!--    <tr class=" text-primary" style="border-bottom: 1px solid black;">-->
+<!--      <th>-->
+<!--        no cmd-->
+<!--      </th>-->
+<!--      <th>-->
+<!--        tot-->
+<!--      </th>-->
+<!--      <th>-->
+<!--        boutique-->
+<!--      </th>-->
+<!--      <th>-->
+<!--        date-->
+<!--      </th>-->
+<!--    </tr>-->
+<!--    <tbody style="border-bottom: 1px solid black;">-->
+<!--    <tr  *ngFor="let cc of commande;">-->
+<!--      <td>{{cc.id}}</td>-->
+<!--      <td>{{cc.totale}}</td>-->
+<!--      <td>{{cc.magasin.nom}}</td>-->
+<!--      <td>{{cc.date | date}}</td>-->
+
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--</div>-->
+

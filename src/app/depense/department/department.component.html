@@ -1,0 +1,14 @@
+<mat-dialog-content>
+  <br>
+  <form  (submit)="addDepartment()">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nom</mat-label>
+      <input matInput [(ngModel)]="nom.nom" name="nom">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button color="primary" type="submit" (click)="addDepartment()">Ajouter</button>
+  <button mat-button color="warn" matDialogClose>Annuler</button>
+</mat-dialog-actions>

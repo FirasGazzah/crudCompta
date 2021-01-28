@@ -1,7 +1,4 @@
 
-import {ProduitsModel} from './produits.model';
-import {MagasinModel} from './magasin.model';
-import {UtilisateurModel} from './utilisateur.model';
 export class ChequesModel {
     id: number;
     montant = '';
@@ -30,6 +27,7 @@ export class CommandeModel {
     remise: number;
     totaleRemise: number;
     sold: boolean;
+    client;
 }
 
 export class CommandeEnLigneProduits {
@@ -58,16 +56,76 @@ export  class ReservationList {
     qte;
     produits: ProduitsModel;
 }
-export class Reservation {
-    id;
-    date;
-    cmdP: ReservationList[] = [];
-    nom;
-    num;
-    totale;
-    avance;
-    rest;
-    etat;
-    magasin: MagasinModel;
-    user: UtilisateurModel;
+
+export class ProduitModel {
+  id: number;
+  reference: string;
+  tailleMin: number;
+  tailleMax: number;
+  prix: number;
+  description: string;
+  image: string;
+  images: string[];
+  cout;
+  benefice;
+  promotion: boolean;
+  oldprix: number;
+  categori: CategoriModel;
+  subcategori: SubCategoriModel;
+  couleur;
+  title;
+  display;
+  type;
+
+}
+export class PromotionModel {
+  id: number;
+  prixinit: number;
+  prixnew;
+  dateFin;
+  dateDebut;
+  promotion;
+  produit: ProduitModel;
+}
+export class CategoriModel {
+  id: number;
+  description: string;
+  nom: string;
+}
+
+
+export class SubCategoriModel {
+  id: number;
+  description: string;
+  nom: string;
+  categori: CategoriModel;
+}
+
+export class ProduitsModel {
+  id: number;
+  taille: number;
+  codebare: string;
+  produits: ProduitModel;
+  qte: number;
+}
+export class MagasinModel {
+  id: number;
+  nom: string;
+  local: string;
+  datedecreation: string;
+  mat: string;
+}
+export class UtilisateurModel {
+  id;
+  nom: string;
+  prenom: string;
+  password: string;
+  username: string;
+  role: string;
+  refreshToken: string;
+  confirmationToken: string;
+  magasin: MagasinModel;
+  editAuth: boolean;
+  addAuth: boolean;
+  deleteAuth: boolean;
 }

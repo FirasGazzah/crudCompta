@@ -1,0 +1,20 @@
+<div class="wrapper">
+  <div class="main-panel">
+      <mat-toolbar color="primary" style="width: auto">
+        <div class="row">
+          <div class="col">
+            <button mat-button routerLink="/depense/show" >Afficher</button>
+            <button mat-button routerLink="/depense/add" >Ajouter</button>
+            <button mat-button (click)="openCat()">Categories</button>
+            <button mat-button (click)="openSubCat()">Sous-Categories</button>
+            <button mat-button (click)="openDep()">Departement</button>
+            <button mat-button routerLink="/depense/showcat">show cat</button>
+
+          </div>
+        </div>
+      </mat-toolbar>
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

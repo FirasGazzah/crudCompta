@@ -1,0 +1,89 @@
+<div class="row">
+  <form [formGroup]="form" (ngSubmit)="addDepense()">
+    <div class="col">
+      <label>Charge Variable ou Fixe?</label><br>
+      <mat-radio-group  [formControl]="charge" >
+        <mat-radio-button value="fixe">fixe</mat-radio-button>
+        <mat-radio-button value="variable">variable</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  <div class="col">
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <input formControlName="desc" matInput>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Date du transaction</mat-label>
+      <input formControlName="date" matInput [matDatepicker]="picker" (focus)="picker.open()">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Montant</mat-label>
+        <input formControlName="montant" matInput type="number">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Mode de paiment</mat-label>
+      <mat-select formControlName="mpay" (selectionChange)="Cheque($event.value)">
+        <mat-option>---</mat-option>
+        <mat-option value="credit">Credit(non-payeé)</mat-option>
+        <mat-option value="espece">Espèces</mat-option>
+        <mat-option value="cheque">Chèque</mat-option>
+        <mat-option value="virement">Virement</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-checkbox *ngIf="check" [(ngModel)]="checked" [ngModelOptions]="{standalone: true}">Payment credit</mat-checkbox>
+    <mat-form-field appearance="outline">
+      <mat-label>Num facture</mat-label>
+      <input formControlName="facture" matInput type="text">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Fournisseur</mat-label>
+      <mat-select formControlName="fourni">
+        <mat-option>---</mat-option>
+        <mat-option *ngFor="let forniseur of fournisseurs | async" [value]="forniseur">{{forniseur.nom}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div *ngIf="!checked">
+      <mat-form-field appearance="outline">
+      <mat-label>Categorie</mat-label>
+      <mat-select formControlName="cat" (selectionChange)="subCat($event.value)">
+        <button mat-raised-button style="width: 100%" (click)="openCat()"><mat-icon>add</mat-icon>Ajouter</button>
+        <mat-optgroup *ngFor="let group of categories | async" [label]="group.nom">
+          <mat-option *ngFor="let sub of group.subcat" [value]="sub">
+            {{sub.nom}}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Sous-Categorie</mat-label>
+        <mat-select formControlName="cat2" (selectionChange)="action($event.value)" >
+          <mat-option>---</mat-option>
+          <mat-optgroup *ngFor="let group of subCats" [label]="group.nom">
+              <mat-option *ngFor="let sub of group.subcat" [value]="sub.nom">
+                <div *ngIf="group.subcat.length">
+                {{sub.nom}}
+                </div>
+              </mat-option>
+              <mat-option [value]="group.nom">
+                <div *ngIf="!group.subcat.length">
+                {{group.nom}}
+                </div>
+              </mat-option>
+          </mat-optgroup>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+      <mat-label>Departement</mat-label>
+      <mat-select formControlName="dep">
+        <mat-option>---</mat-option>
+        <mat-option [value]="dep"  *ngFor="let dep of departements | async">{{dep.nom}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    </div>
+  </div>
+
+  </form>
+  <button mat-button (click)="addDepense()">send</button>
+</div>

@@ -6,8 +6,8 @@ import {Categorie, Departement, Depense, Sub2Categorie, SubCategorie} from '../m
 import {Fournisseur} from '../models/fournisseur';
 
 @Injectable({providedIn: 'root'})
-export class DepenseService {
-    private url = environment.API + '/depense';
+export class FournisseurService {
+    private url = environment.API + '/fournisseur';
 
     // httpOptions = {
     //     headers: new HttpHeaders({
@@ -16,45 +16,10 @@ export class DepenseService {
     //     })
     // };
     constructor(private http: HttpClient) { }
-
-    getDepense(): Observable<Depense[]> {
-        return this.http.get<Depense[]>(this.url);
-    }
-
     getFournisseur(): Observable<Fournisseur[]> {
-      return this.http.get<Fournisseur[]>(this.url + '/fourni');
+      return this.http.get<Fournisseur[]>(this.url);
     }
-    getDepartement(): Observable<Departement[]> {
-      return this.http.get<Departement[]>(this.url + '/dep');
+    addFournisseur(rec: Fournisseur): Observable<Fournisseur> {
+        return this.http.post<Fournisseur>(this.url, rec);
     }
-    getCategories(): Observable<Categorie[]> {
-      return this.http.get<Categorie[]>(this.url + '/categories');
-    }
-  getSubCategories(): Observable<SubCategorie[]> {
-    return this.http.get<SubCategorie[]>(this.url + '/subcategories');
-  }
-  getSubCategories2(): Observable<Sub2Categorie[]> {
-    return this.http.get<Sub2Categorie[]>(this.url + '/subcategories2');
-  }
-
-
-    addDepense(rec: Depense): Observable<Depense> {
-        return this.http.post<Depense>(this.url, rec);
-    }
-    addDepartment(rec): Observable<any> {
-      return this.http.post<any>(this.url + '/dep', rec);
-    }
-    addCategories(rec): Observable<any> {
-      return this.http.post<any>(this.url + '/categories', rec);
-    }
-    addSubCategories(rec, id): Observable<any> {
-      return this.http.post<any>(this.url + '/subcategories/' + id, rec);
-    }
-    addSub2Categories(rec, id): Observable<any> {
-      return this.http.post<any>(this.url + '/subcategories2/' + id, rec);
-    }
-    addSub3Categories(rec, id): Observable<any> {
-      return this.http.post<any>(this.url + '/subcategories3/' + id, rec);
-    }
-
 }

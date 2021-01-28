@@ -4,10 +4,12 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Categorie, Departement, Depense, Sub2Categorie, SubCategorie} from '../models/depense';
 import {Fournisseur} from '../models/fournisseur';
+import {CommandeModel, MagasinModel} from '../models/commande';
+import {FactureModel} from '../models/facture';
 
 @Injectable({providedIn: 'root'})
-export class DepenseService {
-    private url = environment.API + '/depense';
+export class FactureService {
+    private url = environment.API;
 
     // httpOptions = {
     //     headers: new HttpHeaders({
@@ -17,44 +19,16 @@ export class DepenseService {
     // };
     constructor(private http: HttpClient) { }
 
-    getDepense(): Observable<Depense[]> {
-        return this.http.get<Depense[]>(this.url);
-    }
-
-    getFournisseur(): Observable<Fournisseur[]> {
-      return this.http.get<Fournisseur[]>(this.url + '/fourni');
-    }
-    getDepartement(): Observable<Departement[]> {
-      return this.http.get<Departement[]>(this.url + '/dep');
-    }
-    getCategories(): Observable<Categorie[]> {
-      return this.http.get<Categorie[]>(this.url + '/categories');
-    }
-  getSubCategories(): Observable<SubCategorie[]> {
-    return this.http.get<SubCategorie[]>(this.url + '/subcategories');
+  getMagasin(): Observable<MagasinModel[]> {
+    return this.http.get<MagasinModel[]>(this.url + '/magasin');
   }
-  getSubCategories2(): Observable<Sub2Categorie[]> {
-    return this.http.get<Sub2Categorie[]>(this.url + '/subcategories2');
+  public getCmds(): Observable<CommandeModel[]> {
+    return this.http.get<CommandeModel[]>(this.url + '/cmd/all');
   }
-
-
-    addDepense(rec: Depense): Observable<Depense> {
-        return this.http.post<Depense>(this.url, rec);
-    }
-    addDepartment(rec): Observable<any> {
-      return this.http.post<any>(this.url + '/dep', rec);
-    }
-    addCategories(rec): Observable<any> {
-      return this.http.post<any>(this.url + '/categories', rec);
-    }
-    addSubCategories(rec, id): Observable<any> {
-      return this.http.post<any>(this.url + '/subcategories/' + id, rec);
-    }
-    addSub2Categories(rec, id): Observable<any> {
-      return this.http.post<any>(this.url + '/subcategories2/' + id, rec);
-    }
-    addSub3Categories(rec, id): Observable<any> {
-      return this.http.post<any>(this.url + '/subcategories3/' + id, rec);
-    }
-
+  addFacture(rec): Observable<any> {
+    return this.http.post<any>(this.url + '/facture', rec);
+  }
+  getFactures(): Observable<FactureModel[]> {
+    return this.http.get<FactureModel[]>(this.url + '/facture');
+  }
 }

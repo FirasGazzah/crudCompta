@@ -1,10 +1,9 @@
-export class Depense {
+export class Fournisseur {
   id;
-  date;
-  description;
-  categorie;
-  montant;
-  fourniseur;
-  mpay;
-  dep;
+  mf;
+  nom;
+  adr;
+  totale;
+  totalePayee;
+  totaleNonPaye;
 }
